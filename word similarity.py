@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import nltk
+from nltk.corpus import wordnet
+
+# Check if WordNet is already downloaded, if not, download it
+if not nltk.corpus.wordnet.synsets('car'):
+    nltk.download('wordnet')
+
+def compute_similarity(word1, word2):
+    # Get synsets for both words
+    synsets1 = wordnet.synsets(word1)
+    synsets2 = wordnet.synsets(word2)
+
+    max_similarity = 0
+
+    # Iterate through all pairs of synsets and compute similarity
+    for synset1 in synsets1:
+        for synset2 in synsets2:
+            # Compute similarity using Wu-Palmer similarity measure
+            similarity = synset1.wup_similarity(synset2)
+
+            # Update maximum similarity if the current similarity is greater
+            if similarity is not None and similarity > max_similarity:
+                max_similarity = similarity
+
+    return max_similarity
+
+# Test the function
+word1 = "car"
+word2 = "automobile"
+similarity = compute_similarity(word1, word2)
+print(f"Similarity between '{word1}' and '{word2}': {similarity}")
+
+# Print a message indicating successful completion of code execution
+print("Output printed successfully.")
+
+
+# In[ ]:
+
+
+
+
